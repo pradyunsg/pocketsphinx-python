@@ -24,8 +24,8 @@ jobs:
         python-version: ${{ matrix.python }}
 
     # Get build dependencies
-    - run: apt-get update
-    - run: apt-get install -y swig libpulse-dev libasound2-dev
+    - run: sudo apt-get update
+    - run: sudo apt-get install -y swig libpulse-dev libasound2-dev
     - run: pip install setuptools --upgrade
 
     # Run the test suite
