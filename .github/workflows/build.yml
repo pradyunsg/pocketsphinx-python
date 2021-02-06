@@ -24,6 +24,7 @@ jobs:
         python-version: ${{ matrix.python }}
 
     # Get build dependencies
+    - run: git submodule update --init --recursive
     - run: sudo apt-get update
     - run: sudo apt-get install -y swig libpulse-dev libasound2-dev
     - run: pip install setuptools wheel --upgrade
@@ -60,6 +61,7 @@ jobs:
         python-version: ${{ matrix.python }}
 
     # Get build dependencies
+    - run: git submodule update --init --recursive
     - run: brew install swig
     - run: pip install setuptools wheel --upgrade
 
@@ -94,10 +96,8 @@ jobs:
       with:
         python-version: ${{ matrix.python }}
 
-    # This was in the AppVeyor configuration, so I'm keeping it.
-    - run: git submodule update --init --recursive
-
     # Get build dependencies
+    - run: git submodule update --init --recursive
     - run: choco install -y swig --allow-empty-checksums
     - run: pip install setuptools wheel --upgrade
 
