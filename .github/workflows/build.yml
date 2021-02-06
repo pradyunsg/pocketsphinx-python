@@ -1,0 +1,116 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  Ubuntu:
+    name: Ubuntu / ${{ matrix.python }}
+    runs-on: ubuntu-latest
+
+    env:
+      ENABLE_LIBSPHINXAD: "1"
+
+    strategy:
+      matrix:
+        python: [3.6, 3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python }}
+
+    # Get build dependencies
+    - run: apt-get update
+    - run: apt-get install -y swig libpulse-dev libasound2-dev
+    - run: pip install setuptools --upgrade
+
+    # Run the test suite
+    - run: python setup.py test
+
+    # Build distributions
+    - run: python setup.py sdist
+    - run: python setup.py bdist_wheel
+
+    # Upload as artifacts
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ubuntu-distributions
+        path: dist/
+
+  MacOS:
+    name: MacOS / ${{ matrix.python }}
+    runs-on: macos-latest
+
+    env:
+      ENABLE_LIBSPHINXAD: "1"
+
+    strategy:
+      matrix:
+        python: [3.6, 3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python }}
+
+    # Get build dependencies
+    - run: brew update
+    - run: brew install swig
+    - run: pip install setuptools --upgrade
+
+    # Run the test suite
+    - run: python setup.py test
+
+    # Build distributions
+    - run: python setup.py sdist
+    - run: python setup.py bdist_wheel
+
+    # Upload as artifacts
+    - uses: actions/upload-artifact@v2
+      with:
+        name: macos-distributions
+        path: dist/
+
+  Windows:
+    name: Windows / ${{ matrix.python }}
+    runs-on: windows-latest
+
+    env:
+      ENABLE_LIBSPHINXAD: "1"
+
+    strategy:
+      matrix:
+        python: [3.6, 3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python }}
+
+    # This was in the AppVeyor configuration, so I'm keeping it.
+    - run: git submodule update --init --recursive
+
+    # Get build dependencies
+    - run: choco install -y swig --allow-empty-checksums
+    - run: pip install setuptools --upgrade
+
+    # Run the test suite
+    - run: python setup.py test
+
+    # Build distributions
+    - run: python setup.py sdist
+    - run: python setup.py bdist_wheel
+
+    # Upload as artifacts
+    - uses: actions/upload-artifact@v2
+      with:
+        name: windows-distributions
+        path: dist/
