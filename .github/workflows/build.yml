@@ -60,7 +60,6 @@ jobs:
         python-version: ${{ matrix.python }}
 
     # Get build dependencies
-    - run: brew update
     - run: brew install swig
     - run: pip install setuptools wheel --upgrade
 
