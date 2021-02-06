@@ -39,7 +39,7 @@ jobs:
     # Upload as artifacts
     - uses: actions/upload-artifact@v2
       with:
-        name: ubuntu-distributions
+        name: ubuntu-${{ matrix.python }}-distributions
         path: dist/
 
   MacOS:
@@ -75,7 +75,7 @@ jobs:
     # Upload as artifacts
     - uses: actions/upload-artifact@v2
       with:
-        name: macos-distributions
+        name: macos-${{ matrix.python }}-distributions
         path: dist/
 
   Windows:
@@ -111,5 +111,5 @@ jobs:
     # Upload as artifacts
     - uses: actions/upload-artifact@v2
       with:
-        name: windows-distributions
+        name: windows-${{ matrix.python }}-distributions
         path: dist/
