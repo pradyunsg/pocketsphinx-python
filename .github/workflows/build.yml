@@ -26,7 +26,7 @@ jobs:
     # Get build dependencies
     - run: sudo apt-get update
     - run: sudo apt-get install -y swig libpulse-dev libasound2-dev
-    - run: pip install setuptools --upgrade
+    - run: pip install setuptools wheel --upgrade
 
     # Run the test suite
     - run: python setup.py test
@@ -62,7 +62,7 @@ jobs:
     # Get build dependencies
     - run: brew update
     - run: brew install swig
-    - run: pip install setuptools --upgrade
+    - run: pip install setuptools wheel --upgrade
 
     # Run the test suite
     - run: python setup.py test
@@ -100,7 +100,7 @@ jobs:
 
     # Get build dependencies
     - run: choco install -y swig --allow-empty-checksums
-    - run: pip install setuptools --upgrade
+    - run: pip install setuptools wheel --upgrade
 
     # Run the test suite
     - run: python setup.py test
